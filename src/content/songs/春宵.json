@@ -1,0 +1,32 @@
+{
+  "id": "春宵",
+  "title": "春宵",
+  "year": 1994,
+  "work": {
+    "category": "电视剧",
+    "title": "苏东坡",
+    "usage": "插曲"
+  },
+  "credits": {
+    "lyricists": [
+      "苏东坡"
+    ],
+    "composers": [
+      "王文训"
+    ],
+    "performers": [
+      "张宏声",
+      "李娜"
+    ]
+  },
+  "lyrics": {
+    "language": "zh",
+    "text": "春宵一刻值千金，\n花有清香月有阴。\n歌管楼台声细细，\n秋千院落夜沉沉。"
+  },
+  "scores": [
+    "01.jpg"
+  ],
+  "notes": [
+    "词：苏东坡 曲：王文训"
+  ]
+}

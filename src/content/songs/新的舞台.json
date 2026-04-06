@@ -1,0 +1,15 @@
+{
+  "id": "新的舞台",
+  "title": "新的舞台",
+  "year": 1990,
+  "work": {
+    "category": "电视剧",
+    "title": "新的舞台",
+    "usage": "主题曲"
+  },
+  "credits": {
+    "composers": [
+      "伍嘉冀"
+    ]
+  }
+}

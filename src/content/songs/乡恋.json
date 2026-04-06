@@ -1,0 +1,32 @@
+{
+  "id": "乡恋",
+  "title": "乡恋",
+  "year": 1990,
+  "work": {
+    "category": "电视片",
+    "title": "三峡传说",
+    "usage": "插曲"
+  },
+  "credits": {
+    "lyricists": [
+      "马靖华"
+    ],
+    "composers": [
+      "张丕基"
+    ],
+    "original_singers": [
+      "李谷一"
+    ]
+  },
+  "lyrics": {
+    "language": "zh",
+    "text": "你的身影，你的歌声，\n永远印在，我的心中。\n昨天虽已消逝，今天又来临，\n永远印在，我的心中。"
+  },
+  "scores": [
+    "01.jpg"
+  ],
+  "notes": [
+    "马靖华 词 张丕基 曲 李谷一 原唱",
+    "串烧版"
+  ]
+}

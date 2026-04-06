@@ -1,0 +1,31 @@
+{
+  "id": "上海滩",
+  "title": "上海滩",
+  "year": 1987,
+  "work": {
+    "category": "电视剧",
+    "title": "上海滩",
+    "usage": "片头曲"
+  },
+  "credits": {
+    "lyricists": [
+      "黄沾"
+    ],
+    "composers": [
+      "顾嘉辉"
+    ],
+    "original_singers": [
+      "叶丽仪"
+    ]
+  },
+  "lyrics": {
+    "language": "zh",
+    "text": "浪奔 浪流 万里涛涛江水永不休\n淘尽了世间事 混作滔滔一片潮流\n是喜 是愁 浪里分不清欢笑悲忧\n成功 失败 浪里看不出有未有"
+  },
+  "scores": [
+    "01.jpg"
+  ],
+  "notes": [
+    "串烧版"
+  ]
+}
