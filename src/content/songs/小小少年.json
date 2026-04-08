@@ -2,7 +2,14 @@
   "id": "小小少年",
   "title": "小小少年",
   "year": 1996,
+  "credits": {
+    "translators": [
+      "肖章"
+    ],
+    "composers": [
+      "德国歌曲"
+    ]
+  },
   "notes": [
-    "翻唱曲 肖章译词，德国歌曲"
   ]
 }
