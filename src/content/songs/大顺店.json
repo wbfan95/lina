@@ -1,6 +1,7 @@
 {
   "id": "大顺店",
   "title": "大顺店",
+  "pinyin": "da shun dian",
   "year": 1996,
   "work": {
     "category": "电影",
@@ -22,6 +23,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

@@ -1,6 +1,7 @@
 {
   "id": "我是一朵紫罗兰",
   "title": "我是一朵紫罗兰",
+  "pinyin": "wo shi yi duo zi luo lan",
   "year": 1990,
   "credits": {
     "lyricists": [
@@ -17,6 +18,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

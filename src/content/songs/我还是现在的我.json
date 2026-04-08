@@ -1,6 +1,7 @@
 {
   "id": "我还是现在的我",
   "title": "我还是现在的我",
+  "pinyin": "wo hai shi xian zai de wo",
   "year": 1993,
   "work": {
     "category": "电视剧",
@@ -25,6 +26,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

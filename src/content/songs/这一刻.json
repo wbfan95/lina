@@ -1,6 +1,7 @@
 {
   "id": "这一刻",
   "title": "这一刻",
+  "pinyin": "zhe yi ke",
   "year": 1990,
   "credits": {
     "lyricists": [
@@ -17,6 +18,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

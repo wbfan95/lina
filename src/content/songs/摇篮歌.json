@@ -1,6 +1,7 @@
 {
   "id": "摇篮歌",
   "title": "摇篮歌",
+  "pinyin": "yao lan ge",
   "year": 1997,
   "credits": {
     "lyricists": [
@@ -17,6 +18,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

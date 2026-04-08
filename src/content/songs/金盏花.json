@@ -1,6 +1,7 @@
 {
   "id": "金盏花",
   "title": "金盏花",
+  "pinyin": "jin zhan hua",
   "work": {
     "category": "电影",
     "title": "金盏花",
@@ -24,6 +25,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

@@ -1,6 +1,7 @@
 {
   "id": "舞女",
   "title": "舞女",
+  "pinyin": "wu nv",
   "aliases": [
     "舞女泪"
   ],
@@ -23,6 +24,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

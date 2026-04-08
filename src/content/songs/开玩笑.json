@@ -1,15 +1,11 @@
 {
   "id": "开玩笑",
   "title": "开玩笑",
+  "pinyin": "kai wan xiao",
   "aliases": [
     "跟你开玩笑"
   ],
   "year": 1985,
-  "credit":{
-    "original_singers": [
-      "姚莉"
-    ]
-  },
   "lyrics": {
     "language": "zh",
     "text": "昨晚上你来得还很早，\n我偏要说你来迟到，\n和你生气和你恼，\n哎呀呀，郎啊呀，\n你的心里不用恼，\n哎呀呀，那是跟你开玩笑。\n你的心思我知道，\n我却要装作不明了，\n惹你着急惹你恼，\n哎呀呀，郎啊呀，\n你的心里别烦恼，\n哎呀呀，那是跟你开玩笑。\n那是跟你开玩笑，\n开玩笑。"
@@ -17,6 +13,10 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": [],
+  "credit": {
+    "original_singers": [
+      "姚莉"
+    ]
+  }
 }

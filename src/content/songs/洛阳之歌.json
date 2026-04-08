@@ -1,6 +1,7 @@
 {
   "id": "洛阳之歌",
   "title": "洛阳之歌",
+  "pinyin": "luo yang zhi ge",
   "year": 1994,
   "credits": {
     "lyricists": [
@@ -17,6 +18,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

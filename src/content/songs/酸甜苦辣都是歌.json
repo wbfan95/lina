@@ -1,6 +1,7 @@
 {
   "id": "酸甜苦辣都是歌",
   "title": "酸甜苦辣都是歌",
+  "pinyin": "suan tian ku la dou shi ge",
   "year": 1993,
   "work": {
     "category": "电视连续剧",
@@ -27,6 +28,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

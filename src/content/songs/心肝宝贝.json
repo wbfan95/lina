@@ -1,6 +1,7 @@
 {
   "id": "心肝宝贝",
   "title": "心肝宝贝",
+  "pinyin": "xin gan bao bei",
   "year": 1986,
   "work": {
     "category": "电视剧",
@@ -25,6 +26,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

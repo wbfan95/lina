@@ -1,12 +1,13 @@
 {
   "id": "让女人的梦里百花争秀",
   "title": "让女人的梦里百花争秀",
+  "pinyin": "rang nv ren de meng li bai hua zheng xiu",
   "work": {
     "category": "电影",
     "title": "复活的罪恶",
     "usage": "片尾曲"
   },
-    "credits": {
+  "credits": {
     "lyricists": [
       "牛世生"
     ],
@@ -21,6 +22,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

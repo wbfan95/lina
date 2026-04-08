@@ -1,15 +1,15 @@
 {
   "id": "小小少年",
   "title": "小小少年",
+  "pinyin": "xiao xiao shao nian",
   "year": 1996,
   "credits": {
-    "translators": [
-      "肖章"
-    ],
     "composers": [
       "德国歌曲"
+    ],
+    "translators": [
+      "肖章"
     ]
   },
-  "notes": [
-  ]
+  "notes": []
 }

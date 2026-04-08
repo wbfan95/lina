@@ -1,6 +1,7 @@
 {
   "id": "真情",
   "title": "真情",
+  "pinyin": "zhen qing",
   "year": 1993,
   "credits": {
     "lyricists": [
@@ -17,6 +18,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

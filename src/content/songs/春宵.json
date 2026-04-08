@@ -1,6 +1,7 @@
 {
   "id": "春宵",
   "title": "春宵",
+  "pinyin": "chun xiao",
   "year": 1994,
   "work": {
     "category": "电视剧",
@@ -26,6 +27,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

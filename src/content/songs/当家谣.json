@@ -1,6 +1,7 @@
 {
   "id": "当家谣",
   "title": "当家谣",
+  "pinyin": "dang jia yao",
   "year": 1991,
   "credits": {
     "lyricists": [
@@ -20,6 +21,5 @@
     "02.jpg",
     "03.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

@@ -1,6 +1,7 @@
 {
   "id": "英雄无悔",
   "title": "英雄无悔",
+  "pinyin": "ying xiong wu hui",
   "work": {
     "category": "电视剧",
     "title": "张学良和郭松龄",
@@ -21,6 +22,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

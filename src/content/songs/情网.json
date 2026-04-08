@@ -1,12 +1,8 @@
 {
   "id": "情网",
   "title": "情网",
+  "pinyin": "qing wang",
   "year": 1987,
-  "credit":{
-    "original_singers": [
-      "任静"
-    ]
-  },
   "lyrics": {
     "language": "zh",
     "text": "情网情网谁敢闯，\n不用为难别遗忘，\n你我相思思断肠，\n冲破情网似迷航。\n情郎情郎等你慌呀慌，\n情郎情郎相聚多欢畅，\n不要遗忘不要躲藏，\n大胆冲破这张网。"
@@ -17,5 +13,10 @@
   "notes": [
     "串烧版",
     "原唱任静"
-  ]
+  ],
+  "credit": {
+    "original_singers": [
+      "任静"
+    ]
+  }
 }

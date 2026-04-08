@@ -1,6 +1,7 @@
 {
   "id": "贵妃醉酒",
   "title": "贵妃醉酒",
+  "pinyin": "gui fei zui jiu",
   "work": {
     "category": "古典舞蹈",
     "title": "贵妃醉酒"
@@ -14,6 +15,5 @@
     "language": "zh",
     "text": "对酒当歌，\n人生几何。\n一盅盅一盏盏，\n盏盏盅盅，\n盅盅盏盏。"
   },
-  "notes": [
-  ]
+  "notes": []
 }

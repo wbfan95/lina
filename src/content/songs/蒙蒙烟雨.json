@@ -1,6 +1,7 @@
 {
   "id": "蒙蒙烟雨",
   "title": "蒙蒙烟雨",
+  "pinyin": "meng meng yan yu",
   "aliases": [
     "烟雨蒙蒙"
   ],
@@ -29,6 +30,5 @@
     "01.jpg",
     "02.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }

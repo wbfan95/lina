@@ -1,6 +1,7 @@
 {
   "id": "黄土谣",
   "title": "黄土谣",
+  "pinyin": "huang tu yao",
   "aliases": [
     "在这黄土里"
   ],
@@ -26,6 +27,5 @@
   "scores": [
     "01.jpg"
   ],
-  "notes": [
-  ]
+  "notes": []
 }
