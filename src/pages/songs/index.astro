@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import SongExplorer from "@/components/SongExplorer.astro";
+import { getSongSummaries } from "@/lib/content";
+
+const songs = await getSongSummaries();
+---
+
+<BaseLayout title="歌曲总表" description="按标题、拼音、年份与是否带曲谱浏览全部歌曲。">
+  <PageIntro
+    eyebrow="歌曲总表"
+    title="歌曲总表"
+    summary="这里集中浏览全部歌曲，可按标题、拼音、年份、首字、尾字和是否带曲谱筛选。搜索范围为标题与别名，优先保证结果准确。"
+  />
+  <SongExplorer songs={songs} />
+</BaseLayout>

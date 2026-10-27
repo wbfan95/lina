@@ -1,0 +1,165 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ScoreGallery from "@/components/ScoreGallery.astro";
+import { getAllPeople, getAllSongs, getSongSummaries } from "@/lib/content";
+import { formatCreditsLine } from "@/lib/utils";
+
+export async function getStaticPaths() {
+  const songs = await getAllSongs();
+  return songs.map((song) => ({
+    params: { id: song.id },
+    props: { song },
+  }));
+}
+
+const { song } = Astro.props;
+const [summaries, people] = await Promise.all([getSongSummaries(), getAllPeople()]);
+const relatedSongs = summaries
+  .filter((item) => {
+    if (item.id === song.id) return false;
+    if (song.work?.title && item.work?.title === song.work.title) return true;
+    const currentPeople = new Set([...(song.credits?.lyricists ?? []), ...(song.credits?.composers ?? [])]);
+    return [...currentPeople].some((name) =>
+      [...(item.credits?.lyricists ?? []), ...(item.credits?.composers ?? [])].includes(name),
+    );
+  })
+  .slice(0, 8);
+
+const peopleLinks = Array.from(
+  new Set([
+    ...(song.credits?.lyricists ?? []),
+    ...(song.credits?.composers ?? []),
+    ...(song.credits?.performers ?? []),
+    ...(song.credits?.original_singers ?? []),
+  ]),
+);
+const peopleLookup = new Map(people.map((person) => [person.name, person.slug]));
+---
+
+<BaseLayout title={`${song.title} | 李娜作品档案`} description={`${song.title} 的歌曲详情、曲谱与关联信息。`}>
+  <div class="detail-grid">
+    <div class="detail-main">
+      <article class="detail-card panel">
+        <p class="eyebrow">歌曲详情</p>
+        <h1>{song.title}</h1>
+        <p class="lead-text">
+          {song.pinyin}
+          {song.aliases.length > 0 && <span> · 又名 {song.aliases.join(" / ")}</span>}
+        </p>
+        {formatCreditsLine(song.credits) && <p class="lead-text">{formatCreditsLine(song.credits)}</p>}
+        <dl class="meta-list">
+          {song.year && (
+            <div class="meta-row">
+              <dt>年份</dt>
+              <dd><a href={`/years/${song.year}`}>{song.year}</a></dd>
+            </div>
+          )}
+          {song.work?.title && (
+            <div class="meta-row">
+              <dt>所属作品</dt>
+              <dd>
+                {song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}
+                {song.work.usage && <span> · {song.work.usage}</span>}
+              </dd>
+            </div>
+          )}
+          {song.credits?.lyricists?.length && (
+            <div class="meta-row">
+              <dt>词作者</dt>
+              <dd class="inline-list">
+                {song.credits.lyricists.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+              </dd>
+            </div>
+          )}
+          {song.credits?.composers?.length && (
+            <div class="meta-row">
+              <dt>曲作者</dt>
+              <dd class="inline-list">
+                {song.credits.composers.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+              </dd>
+            </div>
+          )}
+          {song.credits?.performers?.length && (
+            <div class="meta-row">
+              <dt>演唱</dt>
+              <dd>{song.credits.performers.join(" / ")}</dd>
+            </div>
+          )}
+          {song.credits?.original_singers?.length && (
+            <div class="meta-row">
+              <dt>原唱</dt>
+              <dd>{song.credits.original_singers.join(" / ")}</dd>
+            </div>
+          )}
+        </dl>
+      </article>
+
+      {song.lyrics?.text && (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>歌词</h2>
+            <p>{song.lyrics.language ? `语言：${song.lyrics.language}` : "歌词保留原始换行，便于逐句阅读。"}</p>
+          </div>
+          <div class="lyrics-block">{song.lyrics.text}</div>
+        </section>
+      )}
+
+      <ScoreGallery songId={song.id} scores={song.scores} />
+
+      {song.videos.length > 0 && (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>视频外链</h2>
+          </div>
+          <div class="list-stack">
+            {song.videos.map((video) => <a class="list-item" href={video} target="_blank" rel="noreferrer">{video}</a>)}
+          </div>
+        </section>
+      )}
+    </div>
+
+    <aside class="detail-aside">
+      {song.notes.length > 0 && (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>补充说明</h2>
+          </div>
+          <div class="list-stack">
+            {song.notes.map((note) => <div class="list-item">{note}</div>)}
+          </div>
+        </section>
+      )}
+
+      {peopleLinks.length > 0 && (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>相关人物</h2>
+          </div>
+          <div class="inline-list">
+            {peopleLinks.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+          </div>
+        </section>
+      )}
+
+      {relatedSongs.length > 0 && (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>相关歌曲</h2>
+            <p>优先按同作品与同词曲关系推荐。</p>
+          </div>
+          <div class="list-stack">
+            {relatedSongs.map((item) => (
+              <a class="list-item" href={`/songs/${encodeURIComponent(item.id)}`}>
+                <strong>{item.title}</strong>
+                <p class="muted">
+                  {item.year && <span>{item.year}</span>}
+                  {item.work?.title && <span> · {item.work.title}</span>}
+                </p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </aside>
+  </div>
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getYearGroups } from "@/lib/content";
+import { formatCreditsLine } from "@/lib/utils";
+
+export async function getStaticPaths() {
+  const years = await getYearGroups();
+  return years.map((yearBlock) => ({
+    params: { year: String(yearBlock.year) },
+    props: { yearBlock },
+  }));
+}
+
+const { yearBlock } = Astro.props;
+---
+
+<BaseLayout title={`${yearBlock.year} 年作品`} description={`${yearBlock.year} 年李娜相关歌曲索引。`}>
+  <section class="page-intro">
+    <p class="eyebrow">年份索引</p>
+    <h1>{yearBlock.year}</h1>
+    <p class="intro-summary">本页聚合 {yearBlock.year} 年可确认年份的歌曲，按标题顺序展示。</p>
+  </section>
+
+  <section class="list-stack">
+    {
+      yearBlock.songs.map((song) => (
+        <a class="list-item" href={`/songs/${encodeURIComponent(song.id)}`}>
+          <strong>{song.title}</strong>
+          <p class="muted">
+            {song.work?.title && <span>{song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}</span>}
+            {song.work?.usage && <span> · {song.work.usage}</span>}
+          </p>
+          {formatCreditsLine(song.credits) && <p class="muted">{formatCreditsLine(song.credits)}</p>}
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

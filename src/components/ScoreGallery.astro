@@ -1,0 +1,35 @@
+---
+import { getScoreImageUrl } from "@/lib/assets";
+
+interface Props {
+  songId: string;
+  scores: string[];
+}
+
+const { songId, scores } = Astro.props;
+const resolved = scores
+  .map((fileName) => ({
+    fileName,
+    src: getScoreImageUrl(songId, fileName),
+  }))
+  .filter((item) => Boolean(item.src));
+---
+
+{resolved.length > 0 && (
+  <section class="detail-section">
+    <div class="section-heading">
+      <h2>曲谱</h2>
+      <p>保持原始比例，点击可查看单页。</p>
+    </div>
+    <div class="score-stack">
+      {resolved.map((item) => (
+        <figure class="score-card">
+          <a href={item.src} target="_blank" rel="noreferrer">
+            <img src={item.src} alt={`${songId} 曲谱 ${item.fileName}`} loading="lazy" />
+          </a>
+          <figcaption>{item.fileName}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+)}

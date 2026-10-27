@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { getAllPeople } from "@/lib/content";
+
+const people = await getAllPeople();
+---
+
+<BaseLayout title="人物索引" description="自动聚合与歌曲相关的人物页，包括作词、作曲、演唱与原唱。">
+  <PageIntro
+    eyebrow="人物索引"
+    title="人物索引"
+    summary="人物页由歌曲中的词曲与演唱字段自动反推生成。后续只要补充基础资料文件，人物页就会自然变得更丰富。"
+  />
+  <section class="card-grid">
+    {
+      people.map((person) => (
+        <a class="entry-card" href={`/people/${encodeURIComponent(person.slug)}`}>
+          <h3>{person.name}</h3>
+          {person.bio && <p>{person.bio}</p>}
+          <p class="muted">{person.totalSongs} 首作品</p>
+          <div class="badge-row">
+            {Object.keys(person.roles).slice(0, 4).map((role) => <span class="badge">{role}</span>)}
+          </div>
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

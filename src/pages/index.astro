@@ -1,0 +1,119 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { getAllPeople, getSiteStats, getSongSummaries, getYearGroups } from "@/lib/content";
+import { formatCreditsLine } from "@/lib/utils";
+
+const [stats, songs, people, years] = await Promise.all([
+  getSiteStats(),
+  getSongSummaries(),
+  getAllPeople(),
+  getYearGroups(),
+]);
+
+const featuredIds = ["青藏高原", "好人一生平安", "嫂子颂", "女人是老虎"];
+const featuredSongs = featuredIds.map((id) => songs.find((song) => song.id === id)).filter(Boolean).slice(0, 4);
+const highlightedPeople = people.filter((person) => person.totalSongs > 4).slice(0, 6);
+const latestYears = years.slice(-4).reverse();
+---
+
+<BaseLayout title="李娜作品档案" description="歌曲、曲谱、人物、影视作品与时间线入口的静态资料站。">
+  <PageIntro
+    eyebrow="人文档案"
+    title="李娜作品档案"
+    summary="围绕李娜演唱作品建立的静态资料站：优先呈现歌曲、曲谱、人物关系与时间脉络，让作品、年代与创作者之间的联系被清楚看见。"
+  />
+
+  <section class="hero-grid">
+    <article class="panel hero-card">
+      <h2>站点说明</h2>
+      <p>
+        这不是一页式介绍，而是一套可长期维护的作品编目。每首歌都尽量保持清晰的标题、年份、词曲、所属影视作品与曲谱资料，
+        页面之间的索引关系由构建阶段自动生成。
+      </p>
+      <div class="link-row">
+        <a class="button-link" href="/songs">进入歌曲总表</a>
+        <a class="button-link secondary" href="/timeline">查看年表入口</a>
+      </div>
+    </article>
+    <article class="panel hero-card panel-soft">
+      <h2>浏览路径</h2>
+      <div class="badge-row">
+        <a class="badge" href="/songs">歌曲</a>
+        <a class="badge" href="/years">年份</a>
+        <a class="badge" href="/people">人物</a>
+        <a class="badge" href="/works">影视作品</a>
+      </div>
+      <p>
+        首页负责给出入口，细节集中在歌曲页与人物页。人物页会自动聚合作词、作曲、演唱与原唱关系，不需要手工维护反向列表。
+      </p>
+    </article>
+  </section>
+
+  <section class="stats-grid">
+    <article class="panel stat-card"><strong>{stats.songs}</strong><span>首歌曲</span></article>
+    <article class="panel stat-card"><strong>{stats.people}</strong><span>位人物</span></article>
+    <article class="panel stat-card"><strong>{stats.works}</strong><span>部影视或作品</span></article>
+    <article class="panel stat-card"><strong>{stats.years}</strong><span>个年份分组</span></article>
+  </section>
+
+  <section class="page-section">
+    <div class="section-heading">
+      <h2>代表作品入口</h2>
+      <p>首批展示几首辨识度较高、并且数据较完整的作品，便于快速进入站内结构。</p>
+    </div>
+    <div class="card-grid card-grid-3">
+      {
+        featuredSongs.map((song) => (
+          <a class="entry-card" href={`/songs/${encodeURIComponent(song.id)}`}>
+            <h3>{song.title}</h3>
+            <p>{song.pinyin}</p>
+            <p class="muted">
+              {song.year && <span>{song.year}</span>}
+              {song.work?.title && <span> · {song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}</span>}
+            </p>
+            {formatCreditsLine(song.credits) && <p>{formatCreditsLine(song.credits)}</p>}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-heading">
+      <h2>按人物进入</h2>
+      <p>先从参与作品较多的人物开始，后续补齐基础资料后，这里会自动变得更完整。</p>
+    </div>
+    <div class="card-grid">
+      {
+        highlightedPeople.map((person) => (
+          <a class="entry-card" href={`/people/${encodeURIComponent(person.slug)}`}>
+            <h3>{person.name}</h3>
+            <p>{person.totalSongs} 首作品关联</p>
+            <div class="badge-row">
+              {Object.keys(person.roles).slice(0, 3).map((role) => <span class="badge">{role}</span>)}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-heading">
+      <h2>年份切面</h2>
+      <p>按年份聚合歌曲，方便从时间脉络回看作品分布。</p>
+    </div>
+    <div class="card-grid">
+      {
+        latestYears.map((yearBlock) => (
+          <a class="entry-card" href={`/years/${yearBlock.year}`}>
+            <h3>{yearBlock.year}</h3>
+            <p>{yearBlock.songs.length} 首歌曲</p>
+            <p>{yearBlock.songs.slice(0, 3).map((song) => song.title).join("、")}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getAllPeople } from "@/lib/content";
+
+export async function getStaticPaths() {
+  const people = await getAllPeople();
+  return people.map((person) => ({
+    params: { id: person.slug },
+    props: { person },
+  }));
+}
+
+const { person } = Astro.props;
+const roleEntries = Object.entries(person.roles);
+---
+
+<BaseLayout title={`${person.name} | 人物索引`} description={`${person.name} 的基础资料与参与作品。`}>
+  <section class="detail-grid">
+    <article class="detail-card panel">
+      <p class="eyebrow">人物页</p>
+      <h1>{person.name}</h1>
+      <p class="lead-text">
+        {person.type && <span>{person.type}</span>}
+        {person.aliases?.length > 0 && <span> · 别名 {person.aliases.join(" / ")}</span>}
+      </p>
+      <p>{person.bio ?? "当前人物页以歌曲关系自动聚合为主，后续可继续补充基础资料。"}</p>
+      <dl class="meta-list">
+        <div class="meta-row">
+          <dt>关联作品</dt>
+          <dd>{person.totalSongs} 首</dd>
+        </div>
+        {person.tags?.length > 0 && (
+          <div class="meta-row">
+            <dt>标签</dt>
+            <dd>{person.tags.join(" / ")}</dd>
+          </div>
+        )}
+      </dl>
+    </article>
+
+    <aside class="detail-aside">
+      {roleEntries.map(([role, songs]) => (
+        <section class="detail-section">
+          <div class="section-heading">
+            <h2>{role}</h2>
+            <p>{songs.length} 首</p>
+          </div>
+          <div class="list-stack">
+            {songs.map((song) => (
+              <a class="list-item" href={`/songs/${encodeURIComponent(song.id)}`}>
+                <strong>{song.title}</strong>
+                <p class="muted">
+                  {song.year && <span>{song.year}</span>}
+                  {song.work?.title && <span> · {song.work.title}</span>}
+                </p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </aside>
+  </section>
+</BaseLayout>

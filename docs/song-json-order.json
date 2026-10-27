@@ -1,0 +1,43 @@
+{
+  "description": "歌曲内容文件与索引文件的字段排序约定。所有 src/content/songs/*.json 以及 index.json 都应遵循这一顺序，缺失字段直接跳过，不额外补空值。",
+  "song_file_order": [
+    "id",
+    "title",
+    "pinyin",
+    "aliases",
+    "year",
+    "work",
+    "credits",
+    "lyrics",
+    "scores",
+    "videos",
+    "notes"
+  ],
+  "nested_order": {
+    "work": [
+      "category",
+      "title",
+      "usage"
+    ],
+    "credits": [
+      "lyricists",
+      "composers",
+      "arrangers",
+      "performers",
+      "original_singers"
+    ],
+    "lyrics": [
+      "language",
+      "text"
+    ]
+  },
+  "index_file_order": [
+    "id",
+    "title",
+    "aliases",
+    "year",
+    "work",
+    "has_scores",
+    "has_videos"
+  ]
+}

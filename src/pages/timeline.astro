@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { getTimelineYears } from "@/lib/content";
+
+const timelineYears = await getTimelineYears();
+const previewYears = timelineYears.slice(0, 8);
+---
+
+<BaseLayout title="年表入口" description="基于现有年表数据整理出的年份入口与条目预览。">
+  <PageIntro
+    eyebrow="时间线"
+    title="年表入口"
+    summary="年表内容仍会继续清理，但现阶段已经可以作为时间入口使用。这里按年份展示首批条目，并尽量回链到已存在的歌曲详情页。"
+  />
+
+  <section class="timeline-grid">
+    {
+      previewYears.map((yearBlock) => (
+        <article class="timeline-card panel">
+          <h2>{yearBlock.year}</h2>
+          <div class="timeline-year">
+            {yearBlock.entries.slice(0, 6).map((entry) => (
+              <div class="timeline-entry">
+                <h3>
+                  {entry.matchedSongId ? (
+                    <a href={`/songs/${encodeURIComponent(entry.matchedSongId)}`}>{entry.songTitle}</a>
+                  ) : (
+                    entry.songTitle
+                  )}
+                </h3>
+                <p>
+                  {entry.media?.category && <span>{entry.media.category}</span>}
+                  {entry.media?.title && <span>《{entry.media.title}》</span>}
+                  {entry.media?.usage && <span> · {entry.media.usage}</span>}
+                </p>
+                {entry.subtitle && <p>{entry.subtitle}</p>}
+                {entry.notes.length > 0 && <p class="muted">{entry.notes.join("；")}</p>}
+              </div>
+            ))}
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

@@ -1,0 +1,42 @@
+---
+const links = [
+  { href: "/", label: "首页" },
+  { href: "/songs", label: "歌曲" },
+  { href: "/years", label: "年份" },
+  { href: "/people", label: "人物" },
+  { href: "/works", label: "影视作品" },
+  { href: "/timeline", label: "年表" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="shell header-shell">
+    <a class="brand" href="/">
+      <span class="brand-kicker">李娜资料站</span>
+      <strong>作品档案</strong>
+    </a>
+    <nav class="desktop-nav" aria-label="主导航">
+      {
+        links.map((link) => (
+          <a class:list={["nav-link", currentPath === link.href && "is-active"]} href={link.href}>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <details class="mobile-nav">
+      <summary>导航</summary>
+      <div class="mobile-panel">
+        {
+          links.map((link) => (
+            <a class:list={["nav-link", currentPath === link.href && "is-active"]} href={link.href}>
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
+  </div>
+</header>

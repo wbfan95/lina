@@ -1,0 +1,16 @@
+{
+  "name": "lina-archive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@types/node": "^25.5.2",
+    "astro": "^5.13.5",
+    "typescript": "^5.9.3"
+  }
+}

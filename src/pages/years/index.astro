@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { getYearGroups } from "@/lib/content";
+
+const years = await getYearGroups();
+---
+
+<BaseLayout title="年份索引" description="按年份浏览李娜作品。">
+  <PageIntro
+    eyebrow="年份索引"
+    title="年份索引"
+    summary="将歌曲按年份聚合，方便从时间脉络回看作品分布与同年作品之间的关系。"
+  />
+  <section class="card-grid">
+    {
+      years.map((yearBlock) => (
+        <a class="entry-card" href={`/years/${yearBlock.year}`}>
+          <h3>{yearBlock.year}</h3>
+          <p>{yearBlock.songs.length} 首歌曲</p>
+          <p>{yearBlock.songs.slice(0, 4).map((song) => song.title).join("、")}</p>
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

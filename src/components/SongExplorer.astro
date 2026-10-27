@@ -1,0 +1,167 @@
+---
+import type { SongSummary } from "@/types/content";
+import { formatCreditsLine } from "@/lib/utils";
+
+interface Props {
+  songs: SongSummary[];
+}
+
+const { songs } = Astro.props;
+const years = Array.from(new Set(songs.map((song) => song.year).filter(Boolean) as number[])).sort((a, b) => a - b);
+const headInitials = Array.from(new Set(songs.map((song) => song.titleHeadInitial))).sort();
+const tailInitials = Array.from(new Set(songs.map((song) => song.titleTailInitial))).sort();
+---
+
+<section class="panel panel-soft">
+  <div class="explorer-toolbar" data-song-controls>
+    <div class="field">
+      <label for="song-search">搜索标题或别名</label>
+      <input id="song-search" name="song-search" type="search" placeholder="例如：青藏高原 / 雨中的故事" />
+    </div>
+    <div class="field-grid">
+      <label class="field">
+        <span>排序</span>
+        <select name="sort">
+          <option value="title">按标题</option>
+          <option value="pinyin">按拼音</option>
+          <option value="year-asc">按年份升序</option>
+          <option value="year-desc">按年份降序</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>年份</span>
+        <select name="year">
+          <option value="">全部</option>
+          {years.map((year) => <option value={String(year)}>{year}</option>)}
+        </select>
+      </label>
+      <label class="field">
+        <span>首字拼音</span>
+        <select name="head">
+          <option value="">全部</option>
+          {headInitials.map((value) => <option value={value}>{value}</option>)}
+        </select>
+      </label>
+      <label class="field">
+        <span>尾字拼音</span>
+        <select name="tail">
+          <option value="">全部</option>
+          {tailInitials.map((value) => <option value={value}>{value}</option>)}
+        </select>
+      </label>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" name="withScores" />
+      <span>仅显示有曲谱</span>
+    </label>
+  </div>
+
+  <div class="explorer-meta">
+    <p data-song-count>共 {songs.length} 首</p>
+    <button type="button" class="text-button" data-reset-filters>清空筛选</button>
+  </div>
+
+  <div class="song-list" data-song-list>
+    {
+      songs.map((song) => (
+        <article
+          class="song-row"
+          data-song-item
+          data-title={song.title.toLowerCase()}
+          data-aliases={song.aliases.join(" ").toLowerCase()}
+          data-pinyin={song.pinyin.toLowerCase()}
+          data-year={song.year ? String(song.year) : ""}
+          data-head={song.titleHeadInitial}
+          data-tail={song.titleTailInitial}
+          data-has-scores={song.hasScores ? "1" : "0"}
+        >
+          <div class="song-row-main">
+            <h2><a href={`/songs/${encodeURIComponent(song.id)}`}>{song.title}</a></h2>
+            <p class="song-row-subtitle">
+              {song.pinyin}
+              {song.aliases.length > 0 && <span> · 又名 {song.aliases.join(" / ")}</span>}
+            </p>
+            {(song.year || song.work?.title || song.credits) && (
+              <p class="song-row-meta">
+                {song.year && <span>{song.year}</span>}
+                {song.work?.title && <span>{song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}</span>}
+                {formatCreditsLine(song.credits) && <span>{formatCreditsLine(song.credits)}</span>}
+              </p>
+            )}
+          </div>
+          <div class="song-row-aside">
+            {song.hasScores && <span class="badge">曲谱 {song.scoreCount}</span>}
+            {song.hasVideos && <span class="badge badge-alt">视频</span>}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const controlsRoot = document.querySelector("[data-song-controls]");
+  const list = document.querySelector("[data-song-list]");
+  if (controlsRoot && list) {
+    const countNode = document.querySelector("[data-song-count]");
+    const resetButton = document.querySelector("[data-reset-filters]");
+    const items = Array.from(list.querySelectorAll("[data-song-item]"));
+    const searchInput = controlsRoot.querySelector('input[name="song-search"]');
+    const yearSelect = controlsRoot.querySelector('select[name="year"]');
+    const sortSelect = controlsRoot.querySelector('select[name="sort"]');
+    const headSelect = controlsRoot.querySelector('select[name="head"]');
+    const tailSelect = controlsRoot.querySelector('select[name="tail"]');
+    const scoresOnly = controlsRoot.querySelector('input[name="withScores"]');
+
+    const compareText = (a, b) => a.localeCompare(b, "zh-Hans-CN-u-co-pinyin", { numeric: true, sensitivity: "base" });
+
+    const rerender = () => {
+      const keyword = (searchInput?.value || "").trim().toLowerCase();
+      const year = yearSelect?.value || "";
+      const head = headSelect?.value || "";
+      const tail = tailSelect?.value || "";
+      const needScores = Boolean(scoresOnly?.checked);
+      const sort = sortSelect?.value || "title";
+
+      const visible = items.filter((item) => {
+        const title = item.dataset.title || "";
+        const aliases = item.dataset.aliases || "";
+        const matchedKeyword = !keyword || [title, aliases].some((text) => text.includes(keyword));
+        const matchedYear = !year || item.dataset.year === year;
+        const matchedHead = !head || item.dataset.head === head;
+        const matchedTail = !tail || item.dataset.tail === tail;
+        const matchedScores = !needScores || item.dataset.hasScores === "1";
+        const shouldShow = matchedKeyword && matchedYear && matchedHead && matchedTail && matchedScores;
+        item.hidden = !shouldShow;
+        return shouldShow;
+      });
+
+      visible.sort((a, b) => {
+        if (sort === "pinyin") return compareText(a.dataset.pinyin || "", b.dataset.pinyin || "");
+        if (sort === "year-asc") return Number(a.dataset.year || 9999) - Number(b.dataset.year || 9999);
+        if (sort === "year-desc") return Number(b.dataset.year || 0) - Number(a.dataset.year || 0);
+        return compareText(a.dataset.title || "", b.dataset.title || "");
+      });
+
+      visible.forEach((item) => list.appendChild(item));
+      if (countNode) countNode.textContent = `共 ${visible.length} 首`;
+    };
+
+    [searchInput, yearSelect, sortSelect, headSelect, tailSelect, scoresOnly].forEach((control) => {
+      control?.addEventListener("input", rerender);
+      control?.addEventListener("change", rerender);
+    });
+
+    resetButton?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      if (yearSelect) yearSelect.value = "";
+      if (sortSelect) sortSelect.value = "title";
+      if (headSelect) headSelect.value = "";
+      if (tailSelect) tailSelect.value = "";
+      if (scoresOnly) scoresOnly.checked = false;
+      rerender();
+    });
+
+    rerender();
+  }
+</script>

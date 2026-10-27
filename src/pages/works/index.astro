@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { getAllWorks } from "@/lib/content";
+
+const works = await getAllWorks();
+---
+
+<BaseLayout title="影视作品索引" description="按影视或相关作品名称聚合歌曲。">
+  <PageIntro
+    eyebrow="作品索引"
+    title="影视作品索引"
+    summary="这里按照歌曲挂载的作品名进行聚合。当前以电视剧、电影等影视作品为主，也保留少量其他类型作品。"
+  />
+  <section class="card-grid">
+    {
+      works.map((work) => (
+        <a class="entry-card" href={`/works/${encodeURIComponent(work.slug)}`}>
+          <h3>{work.title}</h3>
+          <p>{work.category ?? "相关作品"}</p>
+          <p class="muted">{work.songs.length} 首歌曲</p>
+          <div class="badge-row">
+            {work.usageSet.slice(0, 3).map((usage) => <span class="badge">{usage}</span>)}
+          </div>
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

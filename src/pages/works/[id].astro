@@ -1,0 +1,41 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getAllWorks } from "@/lib/content";
+import { formatCreditsLine } from "@/lib/utils";
+
+export async function getStaticPaths() {
+  const works = await getAllWorks();
+  return works.map((work) => ({
+    params: { id: work.slug },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+---
+
+<BaseLayout title={`${work.title} | 作品索引`} description={`${work.title} 相关歌曲聚合页。`}>
+  <section class="page-intro">
+    <p class="eyebrow">作品索引</p>
+    <h1>{work.title}</h1>
+    <p class="intro-summary">
+      {work.category ?? "相关作品"}
+      {work.usageSet.length > 0 && <span> · {work.usageSet.join(" / ")}</span>}
+    </p>
+  </section>
+
+  <section class="list-stack">
+    {
+      work.songs.map((song) => (
+        <a class="list-item" href={`/songs/${encodeURIComponent(song.id)}`}>
+          <strong>{song.title}</strong>
+          <p class="muted">
+            {song.year && <span>{song.year}</span>}
+            {song.work?.usage && <span> · {song.work.usage}</span>}
+          </p>
+          {formatCreditsLine(song.credits) && <p class="muted">{formatCreditsLine(song.credits)}</p>}
+        </a>
+      ))
+    }
+  </section>
+</BaseLayout>

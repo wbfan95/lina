@@ -1,0 +1,37 @@
+---
+import SiteHeader from "@/components/SiteHeader.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "李娜歌曲、曲谱、人物与年表的静态资料站。" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="page-frame">
+      <SiteHeader />
+      <main class="shell page-content">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <div class="shell footer-shell">
+          <p>静态构建 · 本地内容驱动 · 面向长期维护的李娜作品档案站</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import "@/styles/global.css";
+</style>
