@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import { getTimelineYears } from "@/lib/content";
+import { withBase } from "@/lib/utils";
 
 const timelineYears = await getTimelineYears();
 const previewYears = timelineYears.slice(0, 8);
@@ -24,7 +25,7 @@ const previewYears = timelineYears.slice(0, 8);
               <div class="timeline-entry">
                 <h3>
                   {entry.matchedSongId ? (
-                    <a href={`/songs/${encodeURIComponent(entry.matchedSongId)}`}>{entry.songTitle}</a>
+                    <a href={withBase(`/songs/${encodeURIComponent(entry.matchedSongId)}`)}>{entry.songTitle}</a>
                   ) : (
                     entry.songTitle
                   )}

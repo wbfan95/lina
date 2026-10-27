@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import { getAllPeople, getSiteStats, getSongSummaries, getYearGroups } from "@/lib/content";
-import { formatCreditsLine } from "@/lib/utils";
+import { formatCreditsLine, withBase } from "@/lib/utils";
 
 const [stats, songs, people, years] = await Promise.all([
   getSiteStats(),
@@ -32,17 +32,17 @@ const latestYears = years.slice(-4).reverse();
         页面之间的索引关系由构建阶段自动生成。
       </p>
       <div class="link-row">
-        <a class="button-link" href="/songs">进入歌曲总表</a>
-        <a class="button-link secondary" href="/timeline">查看年表入口</a>
+        <a class="button-link" href={withBase("/songs")}>进入歌曲总表</a>
+        <a class="button-link secondary" href={withBase("/timeline")}>查看年表入口</a>
       </div>
     </article>
     <article class="panel hero-card panel-soft">
       <h2>浏览路径</h2>
       <div class="badge-row">
-        <a class="badge" href="/songs">歌曲</a>
-        <a class="badge" href="/years">年份</a>
-        <a class="badge" href="/people">人物</a>
-        <a class="badge" href="/works">影视作品</a>
+        <a class="badge" href={withBase("/songs")}>歌曲</a>
+        <a class="badge" href={withBase("/years")}>年份</a>
+        <a class="badge" href={withBase("/people")}>人物</a>
+        <a class="badge" href={withBase("/works")}>影视作品</a>
       </div>
       <p>
         首页负责给出入口，细节集中在歌曲页与人物页。人物页会自动聚合作词、作曲、演唱与原唱关系，不需要手工维护反向列表。
@@ -65,7 +65,7 @@ const latestYears = years.slice(-4).reverse();
     <div class="card-grid card-grid-3">
       {
         featuredSongs.map((song) => (
-          <a class="entry-card" href={`/songs/${encodeURIComponent(song.id)}`}>
+          <a class="entry-card" href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>
             <h3>{song.title}</h3>
             <p>{song.pinyin}</p>
             <p class="muted">
@@ -87,7 +87,7 @@ const latestYears = years.slice(-4).reverse();
     <div class="card-grid">
       {
         highlightedPeople.map((person) => (
-          <a class="entry-card" href={`/people/${encodeURIComponent(person.slug)}`}>
+          <a class="entry-card" href={withBase(`/people/${encodeURIComponent(person.slug)}`)}>
             <h3>{person.name}</h3>
             <p>{person.totalSongs} 首作品关联</p>
             <div class="badge-row">
@@ -107,7 +107,7 @@ const latestYears = years.slice(-4).reverse();
     <div class="card-grid">
       {
         latestYears.map((yearBlock) => (
-          <a class="entry-card" href={`/years/${yearBlock.year}`}>
+          <a class="entry-card" href={withBase(`/years/${yearBlock.year}`)}>
             <h3>{yearBlock.year}</h3>
             <p>{yearBlock.songs.length} 首歌曲</p>
             <p>{yearBlock.songs.slice(0, 3).map((song) => song.title).join("、")}</p>

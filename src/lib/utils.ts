@@ -3,6 +3,14 @@ const zhPinyinCollator = new Intl.Collator("zh-Hans-CN-u-co-pinyin", {
   sensitivity: "base",
 });
 
+// GitHub Pages 项目页部署在子路径下（如 /lina-archive/），
+// 站内链接统一经过 withBase 加前缀；本地与用户主站部署时为根路径。
+export const BASE_PATH = import.meta.env.BASE_URL.replace(/\/+$/, "");
+
+export function withBase(path: string): string {
+  return path.startsWith("/") ? `${BASE_PATH}${path}` : path;
+}
+
 export function compareText(a: string, b: string) {
   return zhPinyinCollator.compare(a, b);
 }

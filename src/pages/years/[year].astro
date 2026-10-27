@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getYearGroups } from "@/lib/content";
-import { formatCreditsLine } from "@/lib/utils";
+import { formatCreditsLine, withBase } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const years = await getYearGroups();
@@ -24,7 +24,7 @@ const { yearBlock } = Astro.props;
   <section class="list-stack">
     {
       yearBlock.songs.map((song) => (
-        <a class="list-item" href={`/songs/${encodeURIComponent(song.id)}`}>
+        <a class="list-item" href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>
           <strong>{song.title}</strong>
           <p class="muted">
             {song.work?.title && <span>{song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}</span>}

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getAllWorks } from "@/lib/content";
-import { formatCreditsLine } from "@/lib/utils";
+import { formatCreditsLine, withBase } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const works = await getAllWorks();
@@ -27,7 +27,7 @@ const { work } = Astro.props;
   <section class="list-stack">
     {
       work.songs.map((song) => (
-        <a class="list-item" href={`/songs/${encodeURIComponent(song.id)}`}>
+        <a class="list-item" href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>
           <strong>{song.title}</strong>
           <p class="muted">
             {song.year && <span>{song.year}</span>}

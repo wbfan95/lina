@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import { getYearGroups } from "@/lib/content";
+import { withBase } from "@/lib/utils";
 
 const years = await getYearGroups();
 ---
@@ -15,7 +16,7 @@ const years = await getYearGroups();
   <section class="card-grid">
     {
       years.map((yearBlock) => (
-        <a class="entry-card" href={`/years/${yearBlock.year}`}>
+        <a class="entry-card" href={withBase(`/years/${yearBlock.year}`)}>
           <h3>{yearBlock.year}</h3>
           <p>{yearBlock.songs.length} 首歌曲</p>
           <p>{yearBlock.songs.slice(0, 4).map((song) => song.title).join("、")}</p>

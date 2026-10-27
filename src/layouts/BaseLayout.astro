@@ -1,5 +1,6 @@
 ---
 import SiteHeader from "@/components/SiteHeader.astro";
+import { withBase } from "@/lib/utils";
 
 interface Props {
   title: string;
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const { title, description = "李娜歌曲、曲谱、人物与年表的静态资料站。" } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -14,8 +16,20 @@ const { title, description = "李娜歌曲、曲谱、人物与年表的静态�
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <link rel="sitemap" href={withBase("/sitemap-index.xml")} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f5f0e8" />
+    <meta property="og:site_name" content="李娜作品档案" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
   </head>
   <body>
     <div class="page-frame">

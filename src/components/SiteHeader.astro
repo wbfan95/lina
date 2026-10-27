@@ -1,4 +1,6 @@
 ---
+import { withBase } from "@/lib/utils";
+
 const links = [
   { href: "/", label: "首页" },
   { href: "/songs", label: "歌曲" },
@@ -8,19 +10,25 @@ const links = [
   { href: "/timeline", label: "年表" },
 ];
 
-const currentPath = Astro.url.pathname;
+// 构建期路径带部署前缀且以 / 结尾（目录格式），统一去掉尾部斜杠再比较；
+// 区块页（如 /songs/xxx）高亮所属导航项，首页仅精确匹配。
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isActive = (href: string) => {
+  const target = withBase(href).replace(/\/+$/, "") || "/";
+  return target === "/" ? currentPath === "/" : currentPath === target || currentPath.startsWith(`${target}/`);
+};
 ---
 
 <header class="site-header">
   <div class="shell header-shell">
-    <a class="brand" href="/">
+    <a class="brand" href={withBase("/")}>
       <span class="brand-kicker">李娜资料站</span>
       <strong>作品档案</strong>
     </a>
     <nav class="desktop-nav" aria-label="主导航">
       {
         links.map((link) => (
-          <a class:list={["nav-link", currentPath === link.href && "is-active"]} href={link.href}>
+          <a class:list={["nav-link", isActive(link.href) && "is-active"]} href={withBase(link.href)}>
             {link.label}
           </a>
         ))
@@ -31,7 +39,7 @@ const currentPath = Astro.url.pathname;
       <div class="mobile-panel">
         {
           links.map((link) => (
-            <a class:list={["nav-link", currentPath === link.href && "is-active"]} href={link.href}>
+            <a class:list={["nav-link", isActive(link.href) && "is-active"]} href={withBase(link.href)}>
               {link.label}
             </a>
           ))

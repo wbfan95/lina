@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import ScoreGallery from "@/components/ScoreGallery.astro";
 import { getAllPeople, getAllSongs, getSongSummaries } from "@/lib/content";
-import { formatCreditsLine } from "@/lib/utils";
+import { formatCreditsLine, withBase } from "@/lib/utils";
 
 export async function getStaticPaths() {
   const songs = await getAllSongs();
@@ -51,7 +51,7 @@ const peopleLookup = new Map(people.map((person) => [person.name, person.slug]))
           {song.year && (
             <div class="meta-row">
               <dt>年份</dt>
-              <dd><a href={`/years/${song.year}`}>{song.year}</a></dd>
+              <dd><a href={withBase(`/years/${song.year}`)}>{song.year}</a></dd>
             </div>
           )}
           {song.work?.title && (
@@ -67,7 +67,7 @@ const peopleLookup = new Map(people.map((person) => [person.name, person.slug]))
             <div class="meta-row">
               <dt>词作者</dt>
               <dd class="inline-list">
-                {song.credits.lyricists.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+                {song.credits.lyricists.map((name) => <a href={withBase(`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`)}>{name}</a>)}
               </dd>
             </div>
           )}
@@ -75,7 +75,7 @@ const peopleLookup = new Map(people.map((person) => [person.name, person.slug]))
             <div class="meta-row">
               <dt>曲作者</dt>
               <dd class="inline-list">
-                {song.credits.composers.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+                {song.credits.composers.map((name) => <a href={withBase(`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`)}>{name}</a>)}
               </dd>
             </div>
           )}
@@ -136,7 +136,7 @@ const peopleLookup = new Map(people.map((person) => [person.name, person.slug]))
             <h2>相关人物</h2>
           </div>
           <div class="inline-list">
-            {peopleLinks.map((name) => <a href={`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`}>{name}</a>)}
+            {peopleLinks.map((name) => <a href={withBase(`/people/${encodeURIComponent(peopleLookup.get(name) ?? name)}`)}>{name}</a>)}
           </div>
         </section>
       )}
@@ -149,7 +149,7 @@ const peopleLookup = new Map(people.map((person) => [person.name, person.slug]))
           </div>
           <div class="list-stack">
             {relatedSongs.map((item) => (
-              <a class="list-item" href={`/songs/${encodeURIComponent(item.id)}`}>
+              <a class="list-item" href={withBase(`/songs/${encodeURIComponent(item.id)}`)}>
                 <strong>{item.title}</strong>
                 <p class="muted">
                   {item.year && <span>{item.year}</span>}

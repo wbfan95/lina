@@ -1,6 +1,6 @@
 ---
 import type { SongSummary } from "@/types/content";
-import { formatCreditsLine } from "@/lib/utils";
+import { formatCreditsLine, withBase } from "@/lib/utils";
 
 interface Props {
   songs: SongSummary[];
@@ -76,7 +76,7 @@ const tailInitials = Array.from(new Set(songs.map((song) => song.titleTailInitia
           data-has-scores={song.hasScores ? "1" : "0"}
         >
           <div class="song-row-main">
-            <h2><a href={`/songs/${encodeURIComponent(song.id)}`}>{song.title}</a></h2>
+            <h2><a href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>{song.title}</a></h2>
             <p class="song-row-subtitle">
               {song.pinyin}
               {song.aliases.length > 0 && <span> · 又名 {song.aliases.join(" / ")}</span>}

@@ -1,5 +1,6 @@
 ---
-import { getScoreImageUrl } from "@/lib/assets";
+import { Image } from "astro:assets";
+import { getScoreImage } from "@/lib/assets";
 
 interface Props {
   songId: string;
@@ -8,28 +9,37 @@ interface Props {
 
 const { songId, scores } = Astro.props;
 const resolved = scores
-  .map((fileName) => ({
+  .map((fileName, index) => ({
     fileName,
-    src: getScoreImageUrl(songId, fileName),
+    pageIndex: index + 1,
+    image: getScoreImage(songId, fileName),
   }))
-  .filter((item) => Boolean(item.src));
+  .filter((item) => Boolean(item.image));
 ---
 
 {resolved.length > 0 && (
   <section class="detail-section">
     <div class="section-heading">
       <h2>曲谱</h2>
-      <p>保持原始比例，点击可查看单页。</p>
+      <p>保持原始比例，点击可查看原图。</p>
     </div>
     <div class="score-stack">
-      {resolved.map((item) => (
-        <figure class="score-card">
-          <a href={item.src} target="_blank" rel="noreferrer">
-            <img src={item.src} alt={`${songId} 曲谱 ${item.fileName}`} loading="lazy" />
-          </a>
-          <figcaption>{item.fileName}</figcaption>
-        </figure>
-      ))}
+      {
+        resolved.map((item) => (
+          <figure class="score-card">
+            <a href={item.image.src} target="_blank" rel="noreferrer">
+              <Image
+                src={item.image}
+                alt={`${songId} 曲谱第 ${item.pageIndex} 页`}
+                loading="lazy"
+                decoding="async"
+                quality={90}
+              />
+            </a>
+            <figcaption>第 {item.pageIndex} 页</figcaption>
+          </figure>
+        ))
+      }
     </div>
   </section>
 )}

@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import PageIntro from "@/components/PageIntro.astro";
 import { getAllWorks } from "@/lib/content";
+import { withBase } from "@/lib/utils";
 
 const works = await getAllWorks();
 ---
@@ -15,7 +16,7 @@ const works = await getAllWorks();
   <section class="card-grid">
     {
       works.map((work) => (
-        <a class="entry-card" href={`/works/${encodeURIComponent(work.slug)}`}>
+        <a class="entry-card" href={withBase(`/works/${encodeURIComponent(work.slug)}`)}>
           <h3>{work.title}</h3>
           <p>{work.category ?? "相关作品"}</p>
           <p class="muted">{work.songs.length} 首歌曲</p>

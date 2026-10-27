@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PageIntro from "@/components/PageIntro.astro";
+import { withBase } from "@/lib/utils";
+---
+
+<BaseLayout title="页面不存在 | 李娜作品档案" description="访问的页面不存在或已被移动。">
+  <PageIntro
+    eyebrow="404"
+    title="页面不存在"
+    summary="访问的地址不存在或已被移动，可以从下面的入口回到站点。"
+  />
+  <section class="page-section">
+    <div class="link-row">
+      <a class="button-link" href={withBase("/")}>返回首页</a>
+      <a class="button-link secondary" href={withBase("/songs")}>进入歌曲总表</a>
+    </div>
+  </section>
+</BaseLayout>
