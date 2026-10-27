@@ -1,11 +1,17 @@
 {
   "name": "lina-archive",
   "version": "0.1.0",
+  "description": "歌手李娜的作品资料站：歌曲、歌词、曲谱、人物与年表。",
+  "license": "MIT",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "validate": "node tools/validate_content.mjs",
+    "build": "npm run validate && astro build",
     "preview": "astro preview"
   },
   "dependencies": {

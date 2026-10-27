@@ -1,4 +1,4 @@
-const scoreImages = import.meta.glob("/src/content/scores/**/*.{jpg,jpeg,png,webp,avif}", {
+const scoreImages = import.meta.glob("/src/content/scores/**/*.{jpg,jpeg,png,webp,avif,gif}", {
   eager: true,
   import: "default",
 }) as Record<string, string>;
