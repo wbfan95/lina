@@ -463,6 +463,12 @@ select {
   border-radius: var(--radius-md);
 }
 
+/* 曲谱按原始比例缩放：宽随卡片、高自适应，避免宽高属性锁死导致拉伸 */
+.score-card img {
+  width: 100%;
+  height: auto;
+}
+
 .score-card figcaption {
   margin-top: 10px;
   color: var(--text-muted);

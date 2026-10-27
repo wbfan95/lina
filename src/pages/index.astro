@@ -26,11 +26,6 @@ const latestYears = years.slice(-4).reverse();
 
   <section class="hero-grid">
     <article class="panel hero-card">
-      <h2>站点说明</h2>
-      <p>
-        这不是一页式介绍，而是一套可长期维护的作品编目。每首歌都尽量保持清晰的标题、年份、词曲、所属影视作品与曲谱资料，
-        页面之间的索引关系由构建阶段自动生成。
-      </p>
       <div class="link-row">
         <a class="button-link" href={withBase("/songs")}>进入歌曲总表</a>
         <a class="button-link secondary" href={withBase("/timeline")}>查看年表入口</a>
@@ -67,7 +62,6 @@ const latestYears = years.slice(-4).reverse();
         featuredSongs.map((song) => (
           <a class="entry-card" href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>
             <h3>{song.title}</h3>
-            <p>{song.pinyin}</p>
             <p class="muted">
               {song.year && <span>{song.year}</span>}
               {song.work?.title && <span> · {song.work.category ? `${song.work.category}《${song.work.title}》` : `《${song.work.title}》`}</span>}

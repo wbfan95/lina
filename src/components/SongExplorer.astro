@@ -77,10 +77,7 @@ const tailInitials = Array.from(new Set(songs.map((song) => song.titleTailInitia
         >
           <div class="song-row-main">
             <h2><a href={withBase(`/songs/${encodeURIComponent(song.id)}`)}>{song.title}</a></h2>
-            <p class="song-row-subtitle">
-              {song.pinyin}
-              {song.aliases.length > 0 && <span> · 又名 {song.aliases.join(" / ")}</span>}
-            </p>
+            {song.aliases.length > 0 && <p class="song-row-subtitle">又名 {song.aliases.join(" / ")}</p>}
             {(song.year || song.work?.title || song.credits) && (
               <p class="song-row-meta">
                 {song.year && <span>{song.year}</span>}
